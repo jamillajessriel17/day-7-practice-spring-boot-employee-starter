@@ -39,9 +39,8 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public Employee saveEmployee(Employee employee) {
+    public void saveEmployee(Employee employee) {
         employees.add(employee);
-        return employee;
     }
 
     public Employee updateEmployee(Employee employee, Long id) {
@@ -64,5 +63,13 @@ public class EmployeeRepository {
         int employeeIndexToBeDeleted = getEmployeeIndex(id);
 
         return employees.remove(employeeIndexToBeDeleted).getName();
+    }
+
+    public List<Employee> findEmployeeByPageNumberAndPageSize(long pageNumber, long pageSize) {
+        return employees.stream()
+                .skip((pageNumber-1)* pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
     }
 }

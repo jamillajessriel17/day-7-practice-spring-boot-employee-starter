@@ -45,7 +45,13 @@ public class EmployeeController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployeeById(@PathVariable long id){
         String deletedEmployeeName = employeeRepository.deleteEmployeeById(id);
-        return new ResponseEntity<>(deletedEmployeeName + "was deleted in the list of employees.", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(deletedEmployeeName + " was deleted in the list of employee", HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(params = {"pageNumber","pageSize"})
+    public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize){
+
+        return employeeRepository.findEmployeeByPageNumberAndPageSize(pageNumber, pageSize);
     }
 
 }
