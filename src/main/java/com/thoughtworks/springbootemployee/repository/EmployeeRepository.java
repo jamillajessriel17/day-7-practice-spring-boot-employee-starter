@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
+    public static final int START_ID_MINUS_ONE = 0;
+    public static final int INCREMENENT_ID = 1;
 
     static {
         employees.add(new Employee(1l, "Alice", 30, "female", 3000));
@@ -40,7 +42,14 @@ public class EmployeeRepository {
     }
 
     public void saveEmployee(Employee employee) {
-        employees.add(employee);
+        Long id = generateNextId();
+        employees.add(new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
+    }
+
+    private long generateNextId() {
+        return employees.stream().mapToLong(Employee::getId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + INCREMENENT_ID;
     }
 
     public Employee updateEmployee(Employee employee, Long id) {
@@ -51,6 +60,7 @@ public class EmployeeRepository {
                 employees.get(employeeIndexToBeUpdated).getGender(),
                 employee.getSalary()));
     }
+
     private int getEmployeeIndex(Long id) {
         return employees.stream()
                 .filter(employee1 -> id == employee1.getId())
@@ -67,7 +77,7 @@ public class EmployeeRepository {
 
     public List<Employee> findEmployeeByPageNumberAndPageSize(long pageNumber, long pageSize) {
         return employees.stream()
-                .skip((pageNumber-1)* pageSize)
+                .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
 
