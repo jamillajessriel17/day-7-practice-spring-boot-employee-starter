@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee.repository;
+package com.thoughtworks.springbootemployee.exception;
 
 public class EmployeeNotFoundException extends  RuntimeException{
     public EmployeeNotFoundException() {
