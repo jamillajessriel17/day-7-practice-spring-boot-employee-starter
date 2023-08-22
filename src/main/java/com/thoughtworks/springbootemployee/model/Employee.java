@@ -1,17 +1,14 @@
 package com.thoughtworks.springbootemployee.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-
 public class Employee {
 
-    private long id;
-    private String name;
-    private Integer age;
+    private final long id;
+    private final String name;
+    private final Integer age;
 
-    private String gender;
+    private final String gender;
 
-    private Integer salary;
+    private final Integer salary;
 
     public Employee(long id, String name, Integer age, String gender, Integer salary) {
         this.id = id;

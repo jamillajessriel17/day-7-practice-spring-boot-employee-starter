@@ -37,4 +37,10 @@ public class EmployeeController {
         return new ResponseEntity<>(employee.getName() + " was added to the list of Employee.", HttpStatus.OK);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        Employee updatedEmployee = employeeRepository.updateEmployee(employee, id);
+        return new ResponseEntity<>(updatedEmployee.getName() + " was updated", HttpStatus.CREATED);
+    }
+
 }
