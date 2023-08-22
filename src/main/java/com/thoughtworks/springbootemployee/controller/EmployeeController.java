@@ -14,21 +14,21 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    EmployeeRepository repository;
+    EmployeeRepository employeeRepository;
 
     @GetMapping
     public List<Employee> listAll() {
-        return repository.getEmployees();
+        return employeeRepository.getEmployees();
     }
 
     @GetMapping("/{id}")
     public Employee findById(@PathVariable Long id) {
-        return repository.findById(id);
+        return employeeRepository.findById(id);
     }
 
     @GetMapping(params = {"gender"})
     public List<Employee> findByGender(@RequestParam String gender) {
-        return repository.findByGender(gender);
+        return employeeRepository.findByGender(gender);
     }
 
     @PostMapping
