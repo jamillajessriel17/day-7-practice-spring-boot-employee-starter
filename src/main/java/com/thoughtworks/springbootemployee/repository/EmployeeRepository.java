@@ -36,4 +36,9 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getGender() .equals(gender))
                 .collect(Collectors.toList());
     }
+
+    public Employee saveEmployee(Employee employee) {
+      employees.add(employee);
+      return employee;
+    }
 }
