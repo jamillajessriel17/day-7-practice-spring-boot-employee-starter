@@ -74,10 +74,9 @@ public class EmployeeRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public String deleteEmployeeById(long id) {
+    public void deleteEmployeeById(long id) {
         int employeeIndexToBeDeleted = getEmployeeIndex(id);
-
-        return employees.remove(employeeIndexToBeDeleted).getName();
+        employees.remove(employeeIndexToBeDeleted);
     }
 
     public List<Employee> findEmployeeByPageNumberAndPageSize(long pageNumber, long pageSize) {

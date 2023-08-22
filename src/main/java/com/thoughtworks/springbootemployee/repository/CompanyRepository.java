@@ -4,7 +4,6 @@ import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -75,9 +74,9 @@ public class CompanyRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public String deleteCompanyById(long id) {
+    public void deleteCompanyById(long id) {
         int companyIndexToBeDeleted = getCompanyIndex(id);
 
-        return companyList.remove(companyIndexToBeDeleted).getName();
+        companyList.remove(companyIndexToBeDeleted);
     }
 }
