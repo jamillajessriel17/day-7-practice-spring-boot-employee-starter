@@ -42,15 +42,16 @@ public class EmployeeController {
         Employee updatedEmployee = employeeRepository.updateEmployee(employee, id);
         return new ResponseEntity<>(updatedEmployee.getName() + " was updated", HttpStatus.CREATED);
     }
+
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployeeById(@PathVariable long id){
-       employeeRepository.deleteEmployeeById(id);
+    public void deleteEmployeeById(@PathVariable long id) {
+        employeeRepository.deleteEmployeeById(id);
 
     }
 
-    @GetMapping(params = {"pageNumber","pageSize"})
-    public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize){
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize) {
 
         return employeeRepository.findEmployeeByPageNumberAndPageSize(pageNumber, pageSize);
     }
