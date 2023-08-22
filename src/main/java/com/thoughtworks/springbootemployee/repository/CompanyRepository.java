@@ -21,6 +21,9 @@ public class CompanyRepository {
         companyList.add(new Company(1, "OOCL"));
         companyList.add(new Company(2, "KSK company"));
         companyList.add(new Company(3, "JLJ company"));
+        companyList.add(new Company(4, "ACCENTURE"));
+        companyList.add(new Company(5, "Micro sourcing"));
+        companyList.add(new Company(6, "Krusty Crab"));
     }
 
 
@@ -39,6 +42,13 @@ public class CompanyRepository {
     public List<Employee> getEmployeeRepositoryByCompanyId(long companyId) {
         return employeeRepository.getEmployees()
                 .stream().filter(employee -> employee.getCompanyId() == companyId)
+                .collect(Collectors.toList());
+    }
+
+    public List<Company> getCompanyListByPageNumberAndPageSize(long pageNumber, long pageSize) {
+        return companyList.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
                 .collect(Collectors.toList());
     }
 }
