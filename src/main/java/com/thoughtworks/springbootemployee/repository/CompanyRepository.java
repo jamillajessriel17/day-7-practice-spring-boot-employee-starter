@@ -68,6 +68,11 @@ public class CompanyRepository {
                 company.getName()));
 
     }
+    public void deleteCompanyById(long id) {
+        int companyIndexToBeDeleted = getCompanyIndex(id);
+
+        companyList.remove(companyIndexToBeDeleted);
+    }
 
     private int getCompanyIndex(Long id) {
         return companyList.stream()
@@ -77,11 +82,6 @@ public class CompanyRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public void deleteCompanyById(long id) {
-        int companyIndexToBeDeleted = getCompanyIndex(id);
-
-        companyList.remove(companyIndexToBeDeleted);
-    }
     private long generateNextId() {
         return companyList.stream().mapToLong(Company::getId)
                 .max()
