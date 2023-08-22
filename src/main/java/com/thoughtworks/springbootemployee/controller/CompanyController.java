@@ -4,6 +4,8 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,12 @@ public class CompanyController {
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> getCompanyListByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize){
         return companyRepository.getCompanyListByPageNumberAndPageSize(pageNumber, pageSize);
+    }
+
+    @PostMapping
+    public ResponseEntity<String> saveCompany(@RequestBody Company company){
+        Company saveCompany = companyRepository.saveCompany(company);
+        return new ResponseEntity<>(saveCompany.getName()+ " was saved", HttpStatus.CREATED);
     }
 
 }
