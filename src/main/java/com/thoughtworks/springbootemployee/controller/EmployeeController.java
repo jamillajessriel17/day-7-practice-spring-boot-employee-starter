@@ -32,8 +32,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveEmployee(@RequestBody  Employee employee){
-        return new ResponseEntity<>(employee.getName()+" was added to the list of Employee.", HttpStatus.OK);
+    public ResponseEntity<String> saveEmployee(@RequestBody Employee employee) {
+        employeeRepository.saveEmployee(employee);
+        return new ResponseEntity<>(employee.getName() + " was added to the list of Employee.", HttpStatus.OK);
     }
 
 }
