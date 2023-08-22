@@ -50,4 +50,11 @@ public class CompanyController {
         return new ResponseEntity<>(udpateCompany.getName()+ " name was updated.", HttpStatus.OK);
     }
 
+    @DeleteMapping("{id}")
+    public String deleteCompanyById(@PathVariable long id){
+        String deletedCompanyName = companyRepository.deleteCompanyById(id);
+        return  deletedCompanyName + "was deleted.";
+    }
+
+
 }

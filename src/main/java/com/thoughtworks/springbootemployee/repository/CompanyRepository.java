@@ -74,4 +74,10 @@ public class CompanyRepository {
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
     }
+
+    public String deleteCompanyById(long id) {
+        int companyIndexToBeDeleted = getCompanyIndex(id);
+
+        return companyList.remove(companyIndexToBeDeleted).getName();
+    }
 }
