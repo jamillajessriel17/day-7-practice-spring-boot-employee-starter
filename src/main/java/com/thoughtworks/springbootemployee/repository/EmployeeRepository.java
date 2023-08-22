@@ -15,11 +15,11 @@ public class EmployeeRepository {
     public static final int INCREMENENT_ID = 1;
 
     static {
-        employees.add(new Employee(1l, "Alice", 30, "female", 3000));
-        employees.add(new Employee(2l, "Bob", 31, "male", 2000));
-        employees.add(new Employee(3l, "Carl", 32, "male", 6500));
-        employees.add(new Employee(4l, "David", 33, "male", 2000));
-        employees.add(new Employee(5l, "Ellen", 34, "female", 1000));
+        employees.add(new Employee(1l, "Alice", 30, "female", 3000, 1));
+        employees.add(new Employee(2l, "Bob", 31, "male", 2000, 2));
+        employees.add(new Employee(3l, "Carl", 32, "male", 6500, 1));
+        employees.add(new Employee(4l, "David", 33, "male", 2000, 2));
+        employees.add(new Employee(5l, "Ellen", 34, "female", 1000, 3));
 
     }
 
@@ -42,8 +42,13 @@ public class EmployeeRepository {
     }
 
     public void saveEmployee(Employee employee) {
-        Long id = generateNextId();
-        employees.add(new Employee(id, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
+
+        employees.add(new Employee(generateNextId(),
+                employee.getName(),
+                employee.getAge(),
+                employee.getGender(),
+                employee.getSalary(),
+                employee.getCompanyId()));
     }
 
     private long generateNextId() {
@@ -58,7 +63,7 @@ public class EmployeeRepository {
         return employees.set(employeeIndexToBeUpdated, new Employee(id, employees.get(employeeIndexToBeUpdated).getName(),
                 employee.getAge(),
                 employees.get(employeeIndexToBeUpdated).getGender(),
-                employee.getSalary()));
+                employee.getSalary(), employee.getCompanyId()));
     }
 
     private int getEmployeeIndex(Long id) {
