@@ -42,5 +42,10 @@ public class EmployeeController {
         Employee updatedEmployee = employeeRepository.updateEmployee(employee, id);
         return new ResponseEntity<>(updatedEmployee.getName() + " was updated", HttpStatus.CREATED);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteEmployeeById(@PathVariable long id){
+        String deletedEmployeeName = employeeRepository.deleteEmployeeById(id);
+        return new ResponseEntity<>(deletedEmployeeName + "was deleted in the list of employees.", HttpStatus.NO_CONTENT);
+    }
 
 }

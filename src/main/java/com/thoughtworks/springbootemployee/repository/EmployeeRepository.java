@@ -13,11 +13,11 @@ public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
 
     static {
-        employees.add(new Employee(1l, "Alice", 30, "Female", 3000));
-        employees.add(new Employee(2l, "Bob", 31, "Male", 2000));
-        employees.add(new Employee(3l, "Carl", 32, "Male", 6500));
-        employees.add(new Employee(4l, "David", 33, "Male", 2000));
-        employees.add(new Employee(5l, "Ellen", 34, "Female", 1000));
+        employees.add(new Employee(1l, "Alice", 30, "female", 3000));
+        employees.add(new Employee(2l, "Bob", 31, "male", 2000));
+        employees.add(new Employee(3l, "Carl", 32, "male", 6500));
+        employees.add(new Employee(4l, "David", 33, "male", 2000));
+        employees.add(new Employee(5l, "Ellen", 34, "female", 1000));
 
     }
 
@@ -51,5 +51,18 @@ public class EmployeeRepository {
                 employee.getAge(),
                 employees.get(employeeIndexToBeUpdated).getGender(),
                 employee.getSalary()));
+    }
+    private int getEmployeeIndex(Long id) {
+        return employees.stream()
+                .filter(employee1 -> id == employee1.getId())
+                .mapToInt(employees::indexOf)
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    public String deleteEmployeeById(long id) {
+        int employeeIndexToBeDeleted = getEmployeeIndex(id);
+
+        return employees.remove(employeeIndexToBeDeleted).getName();
     }
 }
