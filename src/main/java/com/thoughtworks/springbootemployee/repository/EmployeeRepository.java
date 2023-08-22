@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
     public static final int START_ID_MINUS_ONE = 0;
-    public static final int INCREMENENT_ID = 1;
+    public static final int INCREMENT_ID = 1;
 
     static {
         employees.add(new Employee(1l, "Alice", 30, "female", 3000, 1));
@@ -54,7 +54,7 @@ public class EmployeeRepository {
     private long generateNextId() {
         return employees.stream().mapToLong(Employee::getId)
                 .max()
-                .orElse(START_ID_MINUS_ONE) + INCREMENENT_ID;
+                .orElse(START_ID_MINUS_ONE) + INCREMENT_ID;
     }
 
     public Employee updateEmployee(Employee employee, Long id) {
