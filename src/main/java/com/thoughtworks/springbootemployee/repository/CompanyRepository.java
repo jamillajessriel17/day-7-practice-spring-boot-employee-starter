@@ -55,7 +55,23 @@ public class CompanyRepository {
 
     public Company saveCompany(Company company) {
 
-         companyList.add(company);
+        companyList.add(company);
         return company;
+    }
+
+    public Company updateCompanyName(long id, Company company) {
+        int companyIndexTobeUpdated = getCompanyIndex(id);
+
+        return companyList.set(companyIndexTobeUpdated, new Company(id,
+                company.getName()));
+
+    }
+
+    private int getCompanyIndex(Long id) {
+        return companyList.stream()
+                .filter(company -> id == company.getId())
+                .mapToInt(companyList::indexOf)
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 }

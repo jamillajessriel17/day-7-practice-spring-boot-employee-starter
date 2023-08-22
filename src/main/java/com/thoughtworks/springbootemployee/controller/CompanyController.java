@@ -44,4 +44,10 @@ public class CompanyController {
         return new ResponseEntity<>(saveCompany.getName()+ " was saved", HttpStatus.CREATED);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<String> updateCompanyName(@PathVariable long id, @RequestBody Company company){
+        Company udpateCompany = companyRepository.updateCompanyName(id, company);
+        return new ResponseEntity<>(udpateCompany.getName()+ " name was updated.", HttpStatus.OK);
+    }
+
 }
