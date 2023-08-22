@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.thoughtworks.springbootemployee.repository.EmployeeRepository.INCREMENT_ID;
+import static com.thoughtworks.springbootemployee.repository.EmployeeRepository.START_ID_MINUS_ONE;
+
 @Repository
 public class CompanyRepository {
     private static final List<Company> companyList = new ArrayList<>();
@@ -54,7 +57,7 @@ public class CompanyRepository {
 
     public Company saveCompany(Company company) {
 
-        companyList.add(company);
+        companyList.add(new Company(generateNextId(), company.getName()));
         return company;
     }
 
@@ -78,5 +81,10 @@ public class CompanyRepository {
         int companyIndexToBeDeleted = getCompanyIndex(id);
 
         companyList.remove(companyIndexToBeDeleted);
+    }
+    private long generateNextId() {
+        return companyList.stream().mapToLong(Company::getId)
+                .max()
+                .orElse(START_ID_MINUS_ONE) + INCREMENT_ID;
     }
 }
