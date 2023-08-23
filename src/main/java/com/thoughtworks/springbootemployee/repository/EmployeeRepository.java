@@ -41,14 +41,15 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public void saveEmployee(Employee employee) {
-
-        employees.add(new Employee(generateNextId(),
+    public Employee saveEmployee(Employee employee) {
+        Employee employee1 = new Employee(generateNextId(),
                 employee.getName(),
                 employee.getAge(),
                 employee.getGender(),
                 employee.getSalary(),
-                employee.getCompanyId()));
+                employee.getCompanyId());
+        employees.add(employee1);
+        return employee1;
     }
 
     private long generateNextId() {
@@ -85,5 +86,10 @@ public class EmployeeRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
 
+    }
+
+
+    public void cleanAll() {
+        employees.clear();
     }
 }
