@@ -21,6 +21,10 @@ public class CompanyRepository {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    public EmployeeRepository getEmployeeRepository() {
+        return employeeRepository;
+    }
+
     static {
         companyList.add(new Company(1L, "OOCL"));
         companyList.add(new Company(2L, "KSK company"));

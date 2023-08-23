@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,5 +53,28 @@ public class CompanyApiTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Hello company"));
+    }
+
+    @Test
+    void should_return_employee_list_when_get_employees_by_company_id() throws Exception {
+        //given
+        Long companyId = 1L;
+        Employee jessriel = new Employee(null, "Jessriel", 23, "male", 345, 1L);
+        Employee lucy = new Employee(null, "lucy", 24, "female", 234, 2L);
+        Employee dan = new Employee(null, "Dan", 19, "male", 42335, 1L);
+
+        companyRepository.getEmployeeRepository().cleanAll();
+        Employee jessrielEmployee = companyRepository.getEmployeeRepository().saveEmployee(jessriel);
+        companyRepository.getEmployeeRepository().saveEmployee(lucy);
+        Employee danEmployee = companyRepository.getEmployeeRepository().saveEmployee(dan);
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + companyId + "/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(jessrielEmployee.getId()))
+                .andExpect(jsonPath("$[0].name").value(jessrielEmployee.getName()))
+                .andExpect(jsonPath("$[1].id").value(danEmployee.getId()))
+                .andExpect(jsonPath("$[1].name").value(danEmployee.getName()));
+        //then
     }
 }
