@@ -57,7 +57,7 @@ public class EmployeeController {
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
 
-        return employeeRepository.findEmployeeByPageNumberAndPageSize(pageNumber, pageSize);
+        return employeeService.findEmployeeByPageNumberAndPageSize(pageNumber, pageSize);
     }
 
 }
