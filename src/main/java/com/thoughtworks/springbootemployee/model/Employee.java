@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class Employee {
 
+    public static final int MIN_VALID_AGE = 18;
     private final Long id;
     private final String name;
     private final Integer age;
@@ -26,7 +27,9 @@ public class Employee {
     public Long getId() {
         return id;
     }
-
+    public  boolean hasValidAge() {
+        return getAge() < MIN_VALID_AGE;
+    }
 
     public String getName() {
         return name;

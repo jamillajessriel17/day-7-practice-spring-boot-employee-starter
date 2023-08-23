@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class EmployeeService {
     }
 
     public Employee saveEmployee(Employee employee) {
-
+            if(employee.hasValidAge()){
+                throw new EmployeeCreateException();
+            }
         return employeeRepository.saveEmployee(employee);
     }
+
+
 }

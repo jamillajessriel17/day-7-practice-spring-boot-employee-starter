@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -35,5 +36,18 @@ public class EmployeeServiceTests {
         Assertions.assertEquals(savedEmployee.getGender(), savedEmployeeResponse.getGender());
         Assertions.assertEquals(savedEmployee.getSalary(), savedEmployeeResponse.getSalary());
 
+    }
+
+    @Test
+    void should_throw_exception_when_saveEmployee_given_employee_service_and_employee_age_is_less_than_18() {
+        //given
+        Employee employee = new Employee(null, "Jessriel", 15, "male", 102389, 2L);
+        //when
+        EmployeeCreateException employeeCreateException = Assertions
+                .assertThrows(EmployeeCreateException.class,() -> {
+                            employeeService.saveEmployee(employee);
+                        });
+        //then
+        Assertions.assertEquals("Employee must be 18~65 years old.", employeeCreateException.getMessage());
     }
 }
