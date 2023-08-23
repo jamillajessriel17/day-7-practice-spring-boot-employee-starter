@@ -146,7 +146,7 @@ public class EmployeeServiceTests {
     void should_return_employees_when_findByGender_given_gender_employee_service() {
         //given
         Employee jessriel = new Employee(1L, "Jessriel", 23, "male", 345, 1L);
-        Employee lucy = new Employee(1L, "lucy", 24, "female", 234, 1L);
+        new Employee(1L, "lucy", 24, "female", 234, 1L);
         Employee dan = new Employee(1L, "Dan", 19, "male", 42335, 1L);
         when(mockedEmployeeRepository.findByGender("male")).thenReturn(List.of(jessriel, dan));
         //when

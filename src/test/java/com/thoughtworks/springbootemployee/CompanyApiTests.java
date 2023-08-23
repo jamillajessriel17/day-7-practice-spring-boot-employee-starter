@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -118,5 +119,21 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$.id").value(helloCompany.getId()))
                 .andExpect(jsonPath("$.name").value(helloCompany.getName()));
 
+    }
+
+    @Test
+    void should_return_updated_company_when_perform_put_company_given_company_id_and_new_name() throws Exception {
+        //given
+        Company helloCompany = companyRepository.saveCompany(new Company("Hello"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        Company helloNewName = new Company("New Company Name");
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/companies/" + helloCompany.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(helloNewName)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(helloCompany.getId()))
+                .andExpect(jsonPath("$.name").value(helloNewName.getName()));
+        //then
     }
 }
