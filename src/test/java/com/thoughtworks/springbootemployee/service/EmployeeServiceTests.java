@@ -117,13 +117,28 @@ public class EmployeeServiceTests {
     @Test
     void should_return_all_employees_when_getAllEmployees() {
         //given
-        Employee employee = new Employee(null, "Jessriel", 23,"male",3435,1L);
-        Employee employee1 = new Employee(null, "Jamilla", 22,"male",342343,1L);
+        Employee employee = new Employee(null, "Jessriel", 23, "male", 3435, 1L);
+        Employee employee1 = new Employee(null, "Jamilla", 22, "male", 342343, 1L);
+        when(mockedEmployeeRepository.getEmployees()).thenReturn(List.of(employee, employee1));
         //when
-        when(mockedEmployeeRepository.getEmployees()).thenReturn(List.of(employee,employee1));
-        //then
         List<Employee> allEmployees = employeeService.getAllEmployees();
+        //then
         Assertions.assertEquals(employee, allEmployees.get(0));
         Assertions.assertEquals(employee1, allEmployees.get(1));
+    }
+
+    @Test
+    void should_return_employee_when_findById_given_employee_id() {
+        //given
+        Employee employee = new Employee(1L, "Jessriel", 23, "male", 3435, 1L);
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+        //when
+        Employee employeeById = employeeService.findById(employee.getId());
+        //then
+        Assertions.assertEquals(employee.getId(), employeeById.getId());
+        Assertions.assertEquals(employee.getName(), employeeById.getName());
+        Assertions.assertEquals(employee.getAge(), employeeById.getAge());
+        Assertions.assertEquals(employee.getGender(), employeeById.getGender());
+        Assertions.assertEquals(employee.getSalary(), employeeById.getSalary());
     }
 }
