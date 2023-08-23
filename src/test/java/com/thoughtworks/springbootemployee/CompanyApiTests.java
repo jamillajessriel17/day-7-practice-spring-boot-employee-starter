@@ -40,7 +40,17 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$[0].name").value(helloCompany.getName()))
                 .andExpect(jsonPath("$[1].id").value(hiCompany.getId()))
                 .andExpect(jsonPath("$[1].name").value(hiCompany.getName()));
+    }
 
-
+    @Test
+    void should_return_company_when_perform_get_companies_given_company_id() throws Exception {
+        //given
+        Company helloCompany = companyRepository.saveCompany(new Company("Hello company"));
+        companyRepository.saveCompany(new Company("Hi company"));
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/companies/" + helloCompany.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.name").value("Hello company"));
     }
 }
