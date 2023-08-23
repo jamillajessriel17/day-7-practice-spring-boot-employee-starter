@@ -24,9 +24,10 @@ public class EmployeeApiTests {
     private MockMvc mockMvcClient;
 
     @BeforeEach
-    void cleanEmployeeRepository(){
+    void cleanEmployeeRepository() {
         employeeRepository.cleanAll();
     }
+
     @Test
     void should_return_all_employees_when_get_employees_given_some_employee() throws Exception {
         //given
@@ -34,7 +35,7 @@ public class EmployeeApiTests {
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(jess.getId()))
                 .andExpect(jsonPath("$[0].name").value(jess.getName()))
                 .andExpect(jsonPath("$[0].age").value(jess.getAge()))
@@ -42,19 +43,29 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].salary").value(jess.getSalary()));
         //then
     }
+
     @Test
     void should_return_the_employee_when_perform_get_employee_given_an_employee_id() throws Exception {
-    //given
+        //given
         employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
         Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alic", 23, "female", 2000, 1L));
-     //when
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/"+ alice.getId()))
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + alice.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(alice.getId()))
                 .andExpect(jsonPath("$.name").value(alice.getName()))
                 .andExpect(jsonPath("$.age").value(alice.getAge()))
                 .andExpect(jsonPath("$.gender").value(alice.getGender()))
                 .andExpect(jsonPath("$.salary").value(alice.getSalary()));
-     //then
+    }
+
+    @Test
+    void should_return_404_not_found_when_perform_get_employee_given_a_not_exist_id() throws Exception {
+        //given
+        Long notExistedId = 99L;
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/"+notExistedId))
+                .andExpect(status().isNotFound());
+
     }
 }
