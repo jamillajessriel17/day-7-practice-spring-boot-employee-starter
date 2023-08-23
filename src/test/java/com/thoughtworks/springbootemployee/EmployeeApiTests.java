@@ -38,8 +38,23 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].id").value(jess.getId()))
                 .andExpect(jsonPath("$[0].name").value(jess.getName()))
                 .andExpect(jsonPath("$[0].age").value(jess.getAge()))
-                .andExpect(jsonPath("$[0].gender").value(jess.getGender()));
+                .andExpect(jsonPath("$[0].gender").value(jess.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(jess.getSalary()));
         //then
     }
-
+    @Test
+    void should_return_the_employee_when_perform_get_employee_given_an_employee_id() throws Exception {
+    //given
+        employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
+        Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alic", 23, "female", 2000, 1L));
+     //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/"+ alice.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(alice.getId()))
+                .andExpect(jsonPath("$.name").value(alice.getName()))
+                .andExpect(jsonPath("$.age").value(alice.getAge()))
+                .andExpect(jsonPath("$.gender").value(alice.getGender()))
+                .andExpect(jsonPath("$.salary").value(alice.getSalary()));
+     //then
+    }
 }
