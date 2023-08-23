@@ -42,13 +42,13 @@ public class CompanyRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public List<Employee> getEmployeeRepositoryByCompanyId(long companyId) {
+    public List<Employee> getEmployeeRepositoryByCompanyId(Long companyId) {
         return employeeRepository.getEmployees()
                 .stream().filter(employee -> employee.getCompanyId() == companyId)
                 .collect(Collectors.toList());
     }
 
-    public List<Company> getCompanyListByPageNumberAndPageSize(long pageNumber, long pageSize) {
+    public List<Company> getCompanyListByPageNumberAndPageSize(Long pageNumber, Long pageSize) {
         return companyList.stream()
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
@@ -61,14 +61,14 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company updateCompanyName(long id, Company company) {
+    public Company updateCompanyName(Long id, Company company) {
         int companyIndexTobeUpdated = getCompanyIndex(id);
 
         return companyList.set(companyIndexTobeUpdated, new Company(id,
                 company.getName()));
 
     }
-    public void deleteCompanyById(long id) {
+    public void deleteCompanyById(Long id) {
         int companyIndexToBeDeleted = getCompanyIndex(id);
 
         companyList.remove(companyIndexToBeDeleted);

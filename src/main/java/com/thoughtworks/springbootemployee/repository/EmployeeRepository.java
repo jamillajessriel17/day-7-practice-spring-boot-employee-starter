@@ -74,12 +74,12 @@ public class EmployeeRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public void deleteEmployeeById(long id) {
+    public void deleteEmployeeById(Long id) {
         int employeeIndexToBeDeleted = getEmployeeIndex(id);
         employees.remove(employeeIndexToBeDeleted);
     }
 
-    public List<Employee> findEmployeeByPageNumberAndPageSize(long pageNumber, long pageSize) {
+    public List<Employee> findEmployeeByPageNumberAndPageSize(Long pageNumber, Long pageSize) {
         return employees.stream()
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
