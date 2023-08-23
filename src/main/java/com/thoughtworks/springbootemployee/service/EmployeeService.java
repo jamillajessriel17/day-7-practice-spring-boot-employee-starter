@@ -6,6 +6,8 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -35,5 +37,9 @@ public class EmployeeService {
             throw new EmployeeInactiveException();
         }
         return employeeRepository.updateEmployee(employee, id);
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.getEmployees();
     }
 }
