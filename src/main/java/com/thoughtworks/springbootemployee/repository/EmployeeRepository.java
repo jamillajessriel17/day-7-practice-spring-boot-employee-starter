@@ -75,15 +75,10 @@ public class EmployeeRepository {
 
     private int getEmployeeIndex(Long id) {
         return employees.stream()
-                .filter(employee1 -> id == employee1.getId())
+                .filter(employee1 -> employee1.getId().equals(id))
                 .mapToInt(employees::indexOf)
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
-    }
-
-    public void deleteEmployeeById(Long id) {
-        int employeeIndexToBeDeleted = getEmployeeIndex(id);
-        employees.remove(employeeIndexToBeDeleted);
     }
 
     public List<Employee> findEmployeeByPageNumberAndPageSize(Long pageNumber, Long pageSize) {
@@ -93,7 +88,6 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
 
     }
-
 
     public void cleanAll() {
         employees.clear();

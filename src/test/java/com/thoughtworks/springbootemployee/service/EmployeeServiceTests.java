@@ -85,7 +85,7 @@ public class EmployeeServiceTests {
         Employee employee = new Employee(1L, "Jessriel", 34, "male", 102389, 2L);
         when(mockedEmployeeRepository.findById(1L)).thenReturn(employee);
         //when
-        employeeService.deleteEmployee(employee.getId());
+        employeeService.deleteEmployeeById(employee.getId());
         //then
         verify(mockedEmployeeRepository).updateEmployee(argThat((tempEmployee) -> {
             Assertions.assertFalse(tempEmployee.isActiveStatus());

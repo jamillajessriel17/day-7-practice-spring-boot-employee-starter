@@ -25,7 +25,7 @@ public class EmployeeService {
         return employeeRepository.saveEmployee(employee);
     }
 
-    public void deleteEmployee(Long id) {
+    public void deleteEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id);
         employee.setActiveStatus(Boolean.FALSE);
         employeeRepository.updateEmployee(employee, id);
@@ -51,9 +51,6 @@ public class EmployeeService {
         return employeeRepository.findByGender(gender);
     }
 
-    public void deleteEmployeeById(Long id) {
-        employeeRepository.deleteEmployeeById(id);
-    }
 
     public List<Employee> findEmployeeByPageNumberAndPageSize(Long pageNumber, Long pageSize) {
         return employeeRepository.findEmployeeByPageNumberAndPageSize(pageNumber,pageSize);
