@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.MultiValueMap;
@@ -90,7 +92,7 @@ public class CompanyApiTests {
         companyRepository.saveCompany(new Company("Hello2"));
         Company hello3Company = companyRepository.saveCompany(new Company("Hello3"));
         Company hello4Company = companyRepository.saveCompany(new Company("Hello4"));
-        //when
+        //when //then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/companies")
                         .param("pageNumber", "2")
                         .param("pageSize", "3"))
@@ -100,8 +102,21 @@ public class CompanyApiTests {
                 .andExpect(jsonPath("$[0].name").value(hello3Company.getName()))
                 .andExpect(jsonPath("$[1].id").value(hello4Company.getId()))
                 .andExpect(jsonPath("$[1].name").value(hello4Company.getName()));
-        ;
-        ;
-        //then
+
+    }
+
+    @Test
+    void should_return_save_company_when_perform_post_companies_given_a_new_company() throws Exception {
+        //given
+        ObjectMapper objectMapper = new ObjectMapper();
+        Company helloCompany = new Company(1L, "Hello");
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(helloCompany)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(helloCompany.getId()))
+                .andExpect(jsonPath("$.name").value(helloCompany.getName()));
+
     }
 }
