@@ -127,13 +127,23 @@ public class CompanyApiTests {
         Company helloCompany = companyRepository.saveCompany(new Company("Hello"));
         ObjectMapper objectMapper = new ObjectMapper();
         Company helloNewName = new Company("New Company Name");
-        //when
+        //when //then
         mockMvcClient.perform(MockMvcRequestBuilders.put("/companies/" + helloCompany.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(helloNewName)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(helloCompany.getId()))
                 .andExpect(jsonPath("$.name").value(helloNewName.getName()));
+    }
+
+    @Test
+    void should_return_204_when_perform_delete_companies_given_company_id() throws Exception {
+        //given
+        Company helloCompany = companyRepository.saveCompany(new Company("Hello"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + helloCompany.getId()))
+                .andExpect(status().isNoContent());
         //then
     }
 }

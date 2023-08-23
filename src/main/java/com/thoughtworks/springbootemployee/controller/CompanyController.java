@@ -57,7 +57,6 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompanyById(@PathVariable Long id) {
         companyService.deleteCompanyById(id);
-
     }
 
 
