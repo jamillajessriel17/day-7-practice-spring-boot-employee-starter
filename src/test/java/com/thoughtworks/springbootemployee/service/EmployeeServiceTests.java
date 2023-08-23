@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -108,7 +110,20 @@ public class EmployeeServiceTests {
             employeeService.updateEmployee(employee, employee.getId());
         });
         //then
-        Assertions.assertEquals("Employee is inactive.",employeeInactiveException.getMessage());
+        Assertions.assertEquals("Employee is inactive.", employeeInactiveException.getMessage());
 
+    }
+
+    @Test
+    void should_return_all_employees_when_getAllEmployees() {
+        //given
+        Employee employee = new Employee(null, "Jessriel", 23,"male",3435,1L);
+        Employee employee1 = new Employee(null, "Jamilla", 22,"male",342343,1L);
+        //when
+        when(mockedEmployeeRepository.getEmployees()).thenReturn(List.of(employee,employee1));
+        //then
+        List<Employee> allEmployees = employeeService.getAllEmployees();
+        Assertions.assertEquals(employee, allEmployees.get(0));
+        Assertions.assertEquals(employee1, allEmployees.get(1));
     }
 }
