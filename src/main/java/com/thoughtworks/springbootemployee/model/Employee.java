@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class Employee {
 
     private final Long id;
@@ -24,6 +26,7 @@ public class Employee {
     public Long getId() {
         return id;
     }
+
 
     public String getName() {
         return name;
