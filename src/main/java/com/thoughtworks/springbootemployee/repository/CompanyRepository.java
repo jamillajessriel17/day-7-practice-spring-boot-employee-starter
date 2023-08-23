@@ -45,7 +45,7 @@ public class CompanyRepository {
 
     public List<Employee> getEmployeeRepositoryByCompanyId(Long companyId) {
         return employeeRepository.getEmployees()
-                .stream().filter(employee -> employee.getCompanyId() == companyId)
+                .stream().filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());
     }
 
@@ -57,16 +57,16 @@ public class CompanyRepository {
     }
 
     public Company saveCompany(Company company) {
-
-        companyList.add(new Company(generateNextId(), company.getName()));
-        return company;
+        Company company1 = new Company(generateNextId(), company.getName());
+        companyList.add(company1);
+        return company1;
     }
 
     public Company updateCompanyName(Long id, Company company) {
         int companyIndexTobeUpdated = getCompanyIndex(id);
-
-        return companyList.set(companyIndexTobeUpdated, new Company(id,
-                company.getName()));
+        Company updatedCompany = new Company(id, company.getName());
+         companyList.set(companyIndexTobeUpdated, updatedCompany);
+        return updatedCompany;
 
     }
     public void deleteCompanyById(Long id) {
@@ -77,7 +77,7 @@ public class CompanyRepository {
 
     private int getCompanyIndex(Long id) {
         return companyList.stream()
-                .filter(company -> id == company.getId())
+                .filter(company -> company.getId().equals(id))
                 .mapToInt(companyList::indexOf)
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
