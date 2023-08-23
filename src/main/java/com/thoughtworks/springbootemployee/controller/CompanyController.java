@@ -42,9 +42,9 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveCompany(@RequestBody Company company) {
-        Company saveCompany = companyRepository.saveCompany(company);
-        return new ResponseEntity<>(saveCompany.getName() + " was saved", HttpStatus.CREATED);
+    public ResponseEntity<Company> saveCompany(@RequestBody Company company) {
+        Company savedCompany = companyService.saveCompany(company);
+        return new ResponseEntity<>(savedCompany, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
