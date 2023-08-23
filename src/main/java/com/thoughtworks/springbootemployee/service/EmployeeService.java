@@ -50,4 +50,8 @@ public class EmployeeService {
     public List<Employee> findByGender(String gender) {
         return employeeRepository.findByGender(gender);
     }
+
+    public void deleteEmployeeById(Long id) {
+        employeeRepository.deleteEmployeeById(id);
+    }
 }
