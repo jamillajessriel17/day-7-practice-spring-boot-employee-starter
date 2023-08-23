@@ -15,11 +15,11 @@ public class EmployeeRepository {
     public static final int INCREMENT_ID = 1;
 
     static {
-        employees.add(new Employee(1l, "Alice", 30, "female", 3000, 1));
-        employees.add(new Employee(2l, "Bob", 31, "male", 2000, 2));
-        employees.add(new Employee(3l, "Carl", 32, "male", 6500, 1));
-        employees.add(new Employee(4l, "David", 33, "male", 2000, 2));
-        employees.add(new Employee(5l, "Ellen", 34, "female", 1000, 3));
+        employees.add(new Employee(1L, "Alice", 30, "female", 3000, 1L));
+        employees.add(new Employee(2L, "Bob", 31, "male", 2000, 2L));
+        employees.add(new Employee(3L, "Carl", 32, "male", 6500, 1L));
+        employees.add(new Employee(4L, "David", 33, "male", 2000, 2L));
+        employees.add(new Employee(5L, "Ellen", 34, "female", 1000, 3L));
 
     }
 
@@ -30,7 +30,7 @@ public class EmployeeRepository {
     public Employee findById(Long id) {
 
         return employees.stream()
-                .filter(employee -> employee.getId() == id)
+                .filter(employee -> employee.getId().equals(id))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
     }

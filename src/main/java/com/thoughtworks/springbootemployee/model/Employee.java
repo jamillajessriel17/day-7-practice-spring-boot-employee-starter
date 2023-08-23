@@ -2,7 +2,7 @@ package com.thoughtworks.springbootemployee.model;
 
 public class Employee {
 
-    private final long id;
+    private final Long id;
     private final String name;
     private final Integer age;
 
@@ -10,9 +10,9 @@ public class Employee {
 
     private final Integer salary;
 
-    private final long companyId;
+    private final Long companyId;
 
-    public Employee(long id, String name, Integer age, String gender, Integer salary, long companyId) {
+    public Employee(Long id, String name, Integer age, String gender, Integer salary, Long companyId) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -21,7 +21,7 @@ public class Employee {
         this.companyId = companyId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -37,7 +37,7 @@ public class Employee {
         return gender;
     }
 
-    public long getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
 
