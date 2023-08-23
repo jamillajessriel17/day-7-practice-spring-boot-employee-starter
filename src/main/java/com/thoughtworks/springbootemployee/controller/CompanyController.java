@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,12 @@ public class CompanyController {
 
     @Autowired
     CompanyRepository companyRepository;
-
+    @Autowired
+    CompanyService companyService;
     @GetMapping
     public List<Company> getCompanyList() {
 
-        return companyRepository.findAll();
+        return companyService.findAll();
     }
 
     @GetMapping("/{id}")

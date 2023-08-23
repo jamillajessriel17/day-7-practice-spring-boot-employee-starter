@@ -115,7 +115,7 @@ public class EmployeeServiceTests {
     }
 
     @Test
-    void should_return_all_employees_when_getAllEmployees() {
+    void should_return_all_employees_when_getAllEmployees_given_employee_service() {
         //given
         Employee employee = new Employee(null, "Jessriel", 23, "male", 3435, 1L);
         Employee employee1 = new Employee(null, "Jamilla", 22, "male", 342343, 1L);
@@ -128,7 +128,7 @@ public class EmployeeServiceTests {
     }
 
     @Test
-    void should_return_employee_when_findById_given_employee_id() {
+    void should_return_employee_when_findById_given_employee_id_employee_service() {
         //given
         Employee employee = new Employee(1L, "Jessriel", 23, "male", 3435, 1L);
         when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
@@ -141,8 +141,9 @@ public class EmployeeServiceTests {
         Assertions.assertEquals(employee.getGender(), employeeById.getGender());
         Assertions.assertEquals(employee.getSalary(), employeeById.getSalary());
     }
+
     @Test
-    void should_return_employees_when_findByGender_given_gender() {
+    void should_return_employees_when_findByGender_given_gender_employee_service() {
         //given
         Employee jessriel = new Employee(1L, "Jessriel", 23, "male", 345, 1L);
         Employee lucy = new Employee(1L, "lucy", 24, "female", 234, 1L);
