@@ -140,7 +140,6 @@ public class CompanyApiTests {
     void should_return_204_when_perform_delete_companies_given_company_id() throws Exception {
         //given
         Company helloCompany = companyRepository.saveCompany(new Company("Hello"));
-        ObjectMapper objectMapper = new ObjectMapper();
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/companies/" + helloCompany.getId()))
                 .andExpect(status().isNoContent());
