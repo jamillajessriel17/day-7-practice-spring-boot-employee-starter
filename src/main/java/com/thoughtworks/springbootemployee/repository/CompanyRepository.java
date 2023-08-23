@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
@@ -39,7 +40,7 @@ public class CompanyRepository {
         return companyList.stream()
                 .filter(company -> company.getId() == id)
                 .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
+                .orElseThrow(CompanyNotFoundException::new);
     }
 
     public List<Employee> getEmployeeRepositoryByCompanyId(Long companyId) {
@@ -79,7 +80,7 @@ public class CompanyRepository {
                 .filter(company -> id == company.getId())
                 .mapToInt(companyList::indexOf)
                 .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
+                .orElseThrow(CompanyNotFoundException::new);
     }
 
     private long generateNextId() {
