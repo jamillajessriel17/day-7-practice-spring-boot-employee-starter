@@ -18,9 +18,14 @@ public class EmployeeService {
             if(employee.hasValidAge()){
                 throw new EmployeeCreateException();
             }
-            employee.setActiveStatus(true);
+            employee.setActiveStatus(Boolean.TRUE);
         return employeeRepository.saveEmployee(employee);
     }
 
+    public void deleteEmployee(Long id) {
+        Employee employee = employeeRepository.findById(id);
+        employee.setActiveStatus(Boolean.FALSE);
+        employeeRepository.updateEmployee(employee, id);
+    }
 
 }

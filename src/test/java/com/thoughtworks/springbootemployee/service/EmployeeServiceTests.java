@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class EmployeeServiceTests {
@@ -65,7 +68,7 @@ public class EmployeeServiceTests {
     }
 
     @Test
-    void should_return_save_employee_with_active_status_true_when_saveEmployee_given_employee_service_and_employee() {
+    void should_set_employee_active_status_to_true_by_default_when_create_employee_given_employee_service() {
         //given
         Employee employee = new Employee(null, "Jessriel", 34, "male", 102389, 2L);
         when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(employee);
@@ -74,5 +77,23 @@ public class EmployeeServiceTests {
         System.out.println(savedEmployeeResponse.getId());
         //then
         Assertions.assertTrue(savedEmployeeResponse.isActiveStatus());
+    }
+
+    @Test
+    void should_update_employee_active_status_to_false_when_delete_given_employee_service_employee_id() {
+        //given
+        Employee employee = new Employee(1L, "Jessriel", 34, "male", 102389, 2L);
+        when(mockedEmployeeRepository.findById(1L)).thenReturn(employee);
+        //when
+        employeeService.deleteEmployee(employee.getId());
+        //then
+        verify(mockedEmployeeRepository).updateEmployee(argThat((tempEmployee) -> {
+            Assertions.assertFalse(tempEmployee.isActiveStatus());
+            Assertions.assertEquals(employee.getId(), tempEmployee.getId());
+            Assertions.assertEquals(employee.getName(), tempEmployee.getName());
+            Assertions.assertEquals(employee.getAge(), tempEmployee.getAge());
+            Assertions.assertEquals(employee.getSalary(), tempEmployee.getSalary());
+            return true;
+        }), eq(employee.getId()));
     }
 }
