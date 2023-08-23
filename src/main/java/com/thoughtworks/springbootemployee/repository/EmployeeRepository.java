@@ -42,13 +42,16 @@ public class EmployeeRepository {
     }
 
     public Employee saveEmployee(Employee employee) {
+
         Employee employee1 = new Employee(generateNextId(),
                 employee.getName(),
                 employee.getAge(),
                 employee.getGender(),
                 employee.getSalary(),
                 employee.getCompanyId());
+        employee1.setActiveStatus(employee.isActiveStatus());
         employees.add(employee1);
+
         return employee1;
     }
 

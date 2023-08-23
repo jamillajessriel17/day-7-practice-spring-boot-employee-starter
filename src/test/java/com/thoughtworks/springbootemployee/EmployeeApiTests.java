@@ -107,7 +107,7 @@ public class EmployeeApiTests {
     @Test
     void should_return_updated_employee_when_perform_put_given_employee_id_and_new_employee_age_and_salary() throws Exception {
         //given
-        Employee employeeToBeUpdate = employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
+        Employee employeeToBeUpdate = employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L, Boolean.TRUE));
         Employee employeeDetails = new Employee(1L, "", 26, "", 70000, 1L);
         ObjectMapper objectMapper = new ObjectMapper();
         //when //then
