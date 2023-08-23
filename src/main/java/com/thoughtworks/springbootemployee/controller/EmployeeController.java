@@ -39,9 +39,9 @@ public class EmployeeController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         Employee updatedEmployee = employeeRepository.updateEmployee(employee, id);
-        return new ResponseEntity<>(updatedEmployee.getName() + " was updated", HttpStatus.CREATED);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")

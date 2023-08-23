@@ -60,11 +60,11 @@ public class EmployeeRepository {
 
     public Employee updateEmployee(Employee employee, Long id) {
         int employeeIndexToBeUpdated = getEmployeeIndex(id);
-
-        return employees.set(employeeIndexToBeUpdated, new Employee(id, employees.get(employeeIndexToBeUpdated).getName(),
+         employees.set(employeeIndexToBeUpdated, new Employee(id, employees.get(employeeIndexToBeUpdated).getName(),
                 employee.getAge(),
                 employees.get(employeeIndexToBeUpdated).getGender(),
                 employee.getSalary(), employee.getCompanyId()));
+         return employees.get(employeeIndexToBeUpdated);
     }
 
     private int getEmployeeIndex(Long id) {
