@@ -1,11 +1,19 @@
 package com.thoughtworks.springbootemployee.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Company {
-    private final Long id;
+    private Long id;
     private final String name;
 
-    public Company(Long id, String name) {
+    @JsonCreator
+    public Company(@JsonProperty("id") Long id, @JsonProperty("name")String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Company(String name) {
         this.name = name;
     }
 

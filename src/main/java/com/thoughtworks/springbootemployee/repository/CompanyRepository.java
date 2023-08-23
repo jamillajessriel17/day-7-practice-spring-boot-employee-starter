@@ -88,4 +88,8 @@ public class CompanyRepository {
                 .max()
                 .orElse(START_ID_MINUS_ONE) + INCREMENT_ID;
     }
+
+    public void cleanAll() {
+        companyList.clear();
+    }
 }
