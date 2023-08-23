@@ -8,14 +8,14 @@ public class Employee {
     public static final int MIN_VALID_AGE = 18;
     public static final int MAX_VALID_AGE = 65;
     private final Long id;
-    private final String name;
+    private String name;
     private final Integer age;
 
-    private final String gender;
+    private String gender;
 
-    private final Integer salary;
+    private Integer salary;
 
-    private final Long companyId;
+    private Long companyId;
 
     private boolean activeStatus;
 
@@ -27,6 +27,12 @@ public class Employee {
         this.gender = gender;
         this.salary = salary;
         this.companyId = companyId;
+    }
+
+    public Employee(Long id, Integer age, Integer salary) {
+        this.id = id;
+        this.age = age;
+        this.salary = salary;
     }
 
     @JsonCreator

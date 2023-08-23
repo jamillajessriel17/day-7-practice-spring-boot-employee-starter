@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
+import com.thoughtworks.springbootemployee.exception.EmployeeInactiveException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -74,13 +75,12 @@ public class EmployeeServiceTests {
         when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(employee);
         //when
         Employee savedEmployeeResponse = employeeService.saveEmployee(employee);
-        System.out.println(savedEmployeeResponse.getId());
         //then
         Assertions.assertTrue(savedEmployeeResponse.isActiveStatus());
     }
 
     @Test
-    void should_update_employee_active_status_to_false_when_delete_given_employee_service_employee_id() {
+    void should_update_employee_active_status_to_false_when_deleteEmployee_given_employee_service_employee_id() {
         //given
         Employee employee = new Employee(1L, "Jessriel", 34, "male", 102389, 2L);
         when(mockedEmployeeRepository.findById(1L)).thenReturn(employee);
@@ -92,8 +92,23 @@ public class EmployeeServiceTests {
             Assertions.assertEquals(employee.getId(), tempEmployee.getId());
             Assertions.assertEquals(employee.getName(), tempEmployee.getName());
             Assertions.assertEquals(employee.getAge(), tempEmployee.getAge());
+            Assertions.assertEquals(employee.getGender(), tempEmployee.getGender());
             Assertions.assertEquals(employee.getSalary(), tempEmployee.getSalary());
             return true;
         }), eq(employee.getId()));
+    }
+
+    @Test
+    void should_return_EmployeeInactiveException_when_updateEmployee_given_employee_service() {
+        //given
+        Employee employee = new Employee(1L, "Jessriel", 33, "male", 2999, 1L, Boolean.FALSE);
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+        //when
+        EmployeeInactiveException employeeInactiveException = Assertions.assertThrows(EmployeeInactiveException.class, () -> {
+            employeeService.updateEmployee(employee, employee.getId());
+        });
+        //then
+        Assertions.assertEquals("Employee is inactive.",employeeInactiveException.getMessage());
+
     }
 }
