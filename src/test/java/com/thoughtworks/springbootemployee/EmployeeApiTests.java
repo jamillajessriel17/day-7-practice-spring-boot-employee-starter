@@ -125,12 +125,38 @@ public class EmployeeApiTests {
     @Test
     void should_return_404_when_perform_delete_given_employee_id() throws Exception {
         //given
-        Long employeeIdToDelete = 1L;
+        long employeeIdToDelete = 1L;
         employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
         Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alice", 23, "Female", 2000, 1L));
         //when
-        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+employeeIdToDelete))
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + employeeIdToDelete))
                 .andExpect(status().isNoContent());
+
+        //then
+    }
+
+    @Test
+    void should_employee_list_when_perform_get_given_page_number_and_page_size() throws Exception {
+        //given
+        employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
+        employeeRepository.saveEmployee(new Employee(2L, "Jess", 23, "Male", 2000, 1L));
+        employeeRepository.saveEmployee(new Employee(3L, "Jess", 23, "Male", 2000, 1L));
+        Employee martin = employeeRepository.saveEmployee(new Employee(4L, "Martin", 23, "Male", 22000, 1L));
+        Employee Jess = employeeRepository.saveEmployee(new Employee(5L, "Alice", 26, "female", 25000, 1L));
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("pageNumber", "2").param( "pageSize", "3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(martin.getId()))
+                .andExpect(jsonPath("$[0].name").value(martin.getName()))
+                .andExpect(jsonPath("$[0].age").value(martin.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(martin.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(martin.getSalary()))
+                .andExpect(jsonPath("$[1].id").value(Jess.getId()))
+                .andExpect(jsonPath("$[1].name").value(Jess.getName()))
+                .andExpect(jsonPath("$[1].age").value(Jess.getAge()))
+                .andExpect(jsonPath("$[1].gender").value(Jess.getGender()))
+                .andExpect(jsonPath("$[1].salary").value(Jess.getSalary()));
 
         //then
     }
