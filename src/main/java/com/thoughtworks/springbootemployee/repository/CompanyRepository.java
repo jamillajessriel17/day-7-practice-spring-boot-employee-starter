@@ -22,12 +22,12 @@ public class CompanyRepository {
     EmployeeRepository employeeRepository;
 
     static {
-        companyList.add(new Company(1, "OOCL"));
-        companyList.add(new Company(2, "KSK company"));
-        companyList.add(new Company(3, "JLJ company"));
-        companyList.add(new Company(4, "ACCENTURE"));
-        companyList.add(new Company(5, "Micro sourcing"));
-        companyList.add(new Company(6, "Krusty Crab"));
+        companyList.add(new Company(1L, "OOCL"));
+        companyList.add(new Company(2L, "KSK company"));
+        companyList.add(new Company(3L, "JLJ company"));
+        companyList.add(new Company(4L, "ACCENTURE"));
+        companyList.add(new Company(5L, "Micro sourcing"));
+        companyList.add(new Company(6L, "Krusty Crab"));
     }
 
 
@@ -38,7 +38,7 @@ public class CompanyRepository {
     public Company findById(Long id) {
 
         return companyList.stream()
-                .filter(company -> company.getId() == id)
+                .filter(company -> company.getId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
     }
@@ -83,7 +83,7 @@ public class CompanyRepository {
                 .orElseThrow(CompanyNotFoundException::new);
     }
 
-    private long generateNextId() {
+    private Long generateNextId() {
         return companyList.stream().mapToLong(Company::getId)
                 .max()
                 .orElse(START_ID_MINUS_ONE) + INCREMENT_ID;
