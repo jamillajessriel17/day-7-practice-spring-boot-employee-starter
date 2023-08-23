@@ -32,7 +32,7 @@ public class EmployeeApiTests {
     void should_return_all_employees_when_get_employees_given_some_employee() throws Exception {
         //given
         Employee jess = employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
-        //when
+        //when     //then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -41,7 +41,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].age").value(jess.getAge()))
                 .andExpect(jsonPath("$[0].gender").value(jess.getGender()))
                 .andExpect(jsonPath("$[0].salary").value(jess.getSalary()));
-        //then
     }
 
     @Test
@@ -72,7 +71,7 @@ public class EmployeeApiTests {
     void should_the_employees_when_perform_get_employees_given_gender_a_gender() throws Exception {
         //given
         employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
-        Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alic", 23, "Female", 2000, 1L));
+        Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alice", 23, "Female", 2000, 1L));
         //when   //then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees").param("gender", "Female"))
                 .andExpect(status().isOk())
