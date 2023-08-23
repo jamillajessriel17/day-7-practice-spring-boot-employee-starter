@@ -48,9 +48,9 @@ public class CompanyController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateCompanyName(@PathVariable Long id, @RequestBody Company company) {
-        Company udpateCompany = companyRepository.updateCompanyName(id, company);
-        return new ResponseEntity<>(udpateCompany.getName() + " name was updated.", HttpStatus.OK);
+    public ResponseEntity<Company> updateCompanyName(@PathVariable Long id, @RequestBody Company company) {
+        Company udpatedCompany = companyService.updateCompanyName(id, company);
+        return new ResponseEntity<>(udpatedCompany, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
