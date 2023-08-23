@@ -45,13 +45,13 @@ public class EmployeeController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployeeById(@PathVariable long id) {
+    public void deleteEmployeeById(@PathVariable Long id) {
         employeeRepository.deleteEmployeeById(id);
 
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize) {
+    public List<Employee> findEmployeeByPageNumberAndPageSize(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
 
         return employeeRepository.findEmployeeByPageNumberAndPageSize(pageNumber, pageSize);
     }

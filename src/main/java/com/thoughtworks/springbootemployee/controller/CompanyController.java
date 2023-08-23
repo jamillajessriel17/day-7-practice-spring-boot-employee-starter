@@ -35,7 +35,7 @@ public class CompanyController {
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Company> getCompanyListByPageNumberAndPageSize(@RequestParam long pageNumber, @RequestParam long pageSize) {
+    public List<Company> getCompanyListByPageNumberAndPageSize(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return companyRepository.getCompanyListByPageNumberAndPageSize(pageNumber, pageSize);
     }
 
@@ -46,14 +46,14 @@ public class CompanyController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateCompanyName(@PathVariable long id, @RequestBody Company company) {
+    public ResponseEntity<String> updateCompanyName(@PathVariable Long id, @RequestBody Company company) {
         Company udpateCompany = companyRepository.updateCompanyName(id, company);
         return new ResponseEntity<>(udpateCompany.getName() + " name was updated.", HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompanyById(@PathVariable long id) {
+    public void deleteCompanyById(@PathVariable Long id) {
         companyRepository.deleteCompanyById(id);
 
     }
