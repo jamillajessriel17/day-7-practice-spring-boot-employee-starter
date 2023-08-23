@@ -108,10 +108,10 @@ public class EmployeeApiTests {
     void should_return_updated_employee_when_perform_put_given_employee_id_and_new_employee_age_and_salary() throws Exception {
         //given
         Employee employeeToBeUpdate = employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
-        Employee employeeDetails = new Employee(1L,"",26,"",70000,1L);
+        Employee employeeDetails = new Employee(1L, "", 26, "", 70000, 1L);
         ObjectMapper objectMapper = new ObjectMapper();
         //when //then
-        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/"+employeeDetails.getId())
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + employeeDetails.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(employeeDetails)))
                 .andExpect(status().isCreated())
@@ -120,5 +120,18 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.age").value(employeeDetails.getAge()))
                 .andExpect(jsonPath("$.gender").value(employeeToBeUpdate.getGender()))
                 .andExpect(jsonPath("$.salary").value(employeeDetails.getSalary()));
+    }
+
+    @Test
+    void should_return_404_when_perform_delete_given_employee_id() throws Exception {
+        //given
+        Long employeeIdToDelete = 1L;
+        employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
+        Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alice", 23, "Female", 2000, 1L));
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/"+employeeIdToDelete))
+                .andExpect(status().isNoContent());
+
+        //then
     }
 }
