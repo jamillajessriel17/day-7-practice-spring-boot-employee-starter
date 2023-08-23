@@ -64,8 +64,24 @@ public class EmployeeApiTests {
         //given
         long notExistedId = 99L;
         //when //then
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/"+notExistedId))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistedId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_the_employees_when_perform_get_employees_given_gender_a_gender() throws Exception {
+        //given
+        employeeRepository.saveEmployee(new Employee(1L, "Jess", 23, "Male", 2000, 1L));
+        Employee alice = employeeRepository.saveEmployee(new Employee(2L, "Alic", 23, "Female", 2000, 1L));
+        //when   //then
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees").param("gender", "Female"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(alice.getId()))
+                .andExpect(jsonPath("$[0].name").value(alice.getName()))
+                .andExpect(jsonPath("$[0].age").value(alice.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(alice.getSalary()));
 
     }
 }
