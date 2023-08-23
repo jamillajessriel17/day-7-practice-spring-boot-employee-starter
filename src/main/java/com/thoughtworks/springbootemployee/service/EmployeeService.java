@@ -18,6 +18,7 @@ public class EmployeeService {
             if(employee.hasValidAge()){
                 throw new EmployeeCreateException();
             }
+            employee.setActiveStatus(true);
         return employeeRepository.saveEmployee(employee);
     }
 

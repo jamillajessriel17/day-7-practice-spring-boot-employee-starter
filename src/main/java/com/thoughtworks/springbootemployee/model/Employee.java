@@ -1,7 +1,5 @@
 package com.thoughtworks.springbootemployee.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 public class Employee {
 
     public static final int MIN_VALID_AGE = 18;
@@ -16,6 +14,9 @@ public class Employee {
 
     private final Long companyId;
 
+    private boolean activeStatus;
+
+
     public Employee(Long id, String name, Integer age, String gender, Integer salary, Long companyId) {
         this.id = id;
         this.name = name;
@@ -25,10 +26,21 @@ public class Employee {
         this.companyId = companyId;
     }
 
+    public Employee(Long id, String name, Integer age, String gender, Integer salary, Long companyId, boolean activeStatus) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.companyId = companyId;
+        this.activeStatus = activeStatus;
+    }
+
     public Long getId() {
         return id;
     }
-    public  boolean hasValidAge() {
+
+    public boolean hasValidAge() {
         return getAge() <= MIN_VALID_AGE || getAge() >= MAX_VALID_AGE;
     }
 
@@ -50,5 +62,13 @@ public class Employee {
 
     public Integer getSalary() {
         return salary;
+    }
+
+    public boolean isActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(boolean activeStatus) {
+        this.activeStatus = activeStatus;
     }
 }

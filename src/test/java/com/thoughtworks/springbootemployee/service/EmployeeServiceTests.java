@@ -44,22 +44,35 @@ public class EmployeeServiceTests {
         Employee employee = new Employee(null, "Jessriel", 15, "male", 102389, 2L);
         //when
         EmployeeCreateException employeeCreateException = Assertions
-                .assertThrows(EmployeeCreateException.class,() -> {
-                            employeeService.saveEmployee(employee);
-                        });
+                .assertThrows(EmployeeCreateException.class, () -> {
+                    employeeService.saveEmployee(employee);
+                });
         //then
         Assertions.assertEquals("Employee must be 18~65 years old.", employeeCreateException.getMessage());
     }
+
     @Test
     void should_throw_exception_when_saveEmployee_given_employee_service_and_employee_age_is_less_than_65() {
         //given
         Employee employee = new Employee(null, "Jessriel", 66, "male", 102389, 2L);
         //when
         EmployeeCreateException employeeCreateException = Assertions
-                .assertThrows(EmployeeCreateException.class,() -> {
+                .assertThrows(EmployeeCreateException.class, () -> {
                     employeeService.saveEmployee(employee);
                 });
         //then
         Assertions.assertEquals("Employee must be 18~65 years old.", employeeCreateException.getMessage());
+    }
+
+    @Test
+    void should_return_save_employee_with_active_status_true_when_saveEmployee_given_employee_service_and_employee() {
+        //given
+        Employee employee = new Employee(null, "Jessriel", 34, "male", 102389, 2L);
+        when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(employee);
+        //when
+        Employee savedEmployeeResponse = employeeService.saveEmployee(employee);
+        System.out.println(savedEmployeeResponse.getId());
+        //then
+        Assertions.assertTrue(savedEmployeeResponse.isActiveStatus());
     }
 }
