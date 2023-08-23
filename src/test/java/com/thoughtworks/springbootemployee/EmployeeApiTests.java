@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -81,6 +83,24 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$[0].age").value(alice.getAge()))
                 .andExpect(jsonPath("$[0].gender").value(alice.getGender()))
                 .andExpect(jsonPath("$[0].salary").value(alice.getSalary()));
+
+    }
+
+    @Test
+    void should_return_the_created_employee_when_perform_post_given_new_employee() throws Exception {
+        //given
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee employeeToSave = new Employee(1L, "Jess", 23, "Male", 2000, 1L);
+        //when //then
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(employeeToSave)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(employeeToSave.getId()))
+                .andExpect(jsonPath("$.name").value(employeeToSave.getName()))
+                .andExpect(jsonPath("$.age").value(employeeToSave.getAge()))
+                .andExpect(jsonPath("$.gender").value(employeeToSave.getGender()))
+                .andExpect(jsonPath("$.salary").value(employeeToSave.getSalary()));
 
     }
 }
