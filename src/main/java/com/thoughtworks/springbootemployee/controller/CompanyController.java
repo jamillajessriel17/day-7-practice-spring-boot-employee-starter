@@ -16,8 +16,6 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-    CompanyRepository companyRepository;
-    @Autowired
     CompanyService companyService;
     @GetMapping
     public List<Company> getCompanyList() {
@@ -27,7 +25,7 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public Company findCompanyById(@PathVariable Long id) {
-        return companyRepository.findById(id);
+        return companyService.findById(id);
     }
 
     @GetMapping("/{id}/employees")
