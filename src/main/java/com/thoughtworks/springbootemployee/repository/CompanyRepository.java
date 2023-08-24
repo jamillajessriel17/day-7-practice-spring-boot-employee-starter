@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
-import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +68,11 @@ public class CompanyRepository {
     public Company updateCompanyName(Long id, Company company) {
         int companyIndexTobeUpdated = getCompanyIndex(id);
         Company updatedCompany = new Company(id, company.getName());
-         companyList.set(companyIndexTobeUpdated, updatedCompany);
+        companyList.set(companyIndexTobeUpdated, updatedCompany);
         return updatedCompany;
 
     }
+
     public void deleteCompanyById(Long id) {
         int companyIndexToBeDeleted = getCompanyIndex(id);
 

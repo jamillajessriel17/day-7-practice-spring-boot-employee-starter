@@ -25,7 +25,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanyListByPageNumberAndPageSize(Long pageNumber, Long pageSize) {
-        return companyRepository.getCompanyListByPageNumberAndPageSize(pageNumber,pageSize);
+        return companyRepository.getCompanyListByPageNumberAndPageSize(pageNumber, pageSize);
     }
 
     public Company saveCompany(Company company) {
@@ -41,6 +41,6 @@ public class CompanyService {
     }
 
     public Company findById(Long id) {
-       return  companyRepository.findById(id);
+        return companyRepository.findById(id);
     }
 }

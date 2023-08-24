@@ -8,7 +8,7 @@ public class Company {
     private final String name;
 
     @JsonCreator
-    public Company(@JsonProperty("id") Long id, @JsonProperty("name")String name) {
+    public Company(@JsonProperty("id") Long id, @JsonProperty("name") String name) {
         this.id = id;
         this.name = name;
     }
